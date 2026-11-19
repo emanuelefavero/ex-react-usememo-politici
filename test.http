@@ -1,0 +1,24 @@
+@baseUrl = http://localhost:3333
+@resource = politicians
+
+### GET index
+GET {{baseUrl}}/{{resource}}
+
+# Example response
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+  "id": 1,
+  "name": "Donald Trump",
+  "dob": "June 14, 1946",
+  "country": "United States",
+  "party": "Republican Party",
+  "position": "President",
+  "years_in_office": "2017–2021, 2025–Present",
+  "biography": "Donald Trump is the 45th and 47th President of the United States, making history as the second U.S. president to serve non-consecutive terms. He won the 2024 election against Kamala Harris and was inaugurated in January 2025. His second term has been marked by significant policy shifts, including increased tariffs and executive actions.",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg/960px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg"
+  },
+  ...others
+]
