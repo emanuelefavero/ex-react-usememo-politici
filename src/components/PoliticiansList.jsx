@@ -5,28 +5,28 @@ import './PoliticiansList.css';
 
 const FALLBACK_IMAGE = '/image-placeholder.svg';
 
-const PoliticianCard = memo(({ politician }) => {
-  console.log('Rendering card:', politician.name);
+const PoliticianCard = memo(({ name, image, position, biography }) => {
+  console.log('Rendering card:', name);
 
   return (
     <Card className='politicians-card'>
       <Card.Header className='header'>
         <Card.Image
-          src={politician.image || FALLBACK_IMAGE}
-          alt={politician.name}
+          src={image || FALLBACK_IMAGE}
+          alt={name}
           onError={({ currentTarget: image }) => {
             if (image.getAttribute('src') !== FALLBACK_IMAGE) {
               image.src = FALLBACK_IMAGE;
             }
           }}
         />
-        <Card.Title>{politician.name}</Card.Title>
+        <Card.Title>{name}</Card.Title>
       </Card.Header>
       <Card.Content className='content'>
         <p>
-          <Badge>{politician.position}</Badge>
+          <Badge>{position}</Badge>
         </p>
-        <p>{politician.biography}</p>
+        <p>{biography}</p>
       </Card.Content>
     </Card>
   );
@@ -37,7 +37,7 @@ export const PoliticiansList = ({ politicians }) =>
     <ul className='politicians-list'>
       {politicians.map(politician => (
         <li key={politician.id}>
-          <PoliticianCard politician={politician} />
+          <PoliticianCard {...politician} />
         </li>
       ))}
     </ul>
