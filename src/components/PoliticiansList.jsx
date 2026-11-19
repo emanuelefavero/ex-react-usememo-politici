@@ -14,7 +14,11 @@ const PoliticianCard = memo(({ politician }) => {
         <Card.Image
           src={politician.image || FALLBACK_IMAGE}
           alt={politician.name}
-          onError={({ currentTarget: image }) => (image.src = FALLBACK_IMAGE)}
+          onError={({ currentTarget: image }) => {
+            if (image.getAttribute('src') !== FALLBACK_IMAGE) {
+              image.src = FALLBACK_IMAGE;
+            }
+          }}
         />
         <Card.Title>{politician.name}</Card.Title>
       </Card.Header>
