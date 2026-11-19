@@ -20,4 +20,10 @@
     background-color: var(--background-muted);
     border-bottom: 1px solid var(--border);
   }
+
+  .card-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 }

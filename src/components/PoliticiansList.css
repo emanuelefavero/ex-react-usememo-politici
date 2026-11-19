@@ -1,0 +1,15 @@
+.politicians-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+
+  /* Add vertical spacing inside the card */
+  .politicians-card {
+    .header,
+    .content {
+      > * + * {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
