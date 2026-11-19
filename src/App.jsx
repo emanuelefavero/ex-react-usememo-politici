@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import { PoliticiansFilters } from './components/PoliticiansFilters';
 import { PoliticiansList } from './components/PoliticiansList';
-import { Input } from './components/ui/Input';
-import { Select } from './components/ui/Select';
 import { fetchJson } from './lib/api';
 import './App.css';
 
@@ -17,6 +16,7 @@ export const App = () => {
   const [filter, setFilter] = useState(initialFilter);
   const [state, setState] = useState({ step: 'idle' });
 
+  // Filter politicians based on search and position criteria
   const filteredPoliticians = useMemo(() => {
     if (state.step !== 'success') return [];
 
@@ -62,34 +62,13 @@ export const App = () => {
         return <p role='status'>Loading...</p>;
 
       case 'success':
-        const handleFilterChange = e =>
-          setFilter({ ...filter, search: e.target.value });
-
         return (
           <>
-            <form className='filter-form' onSubmit={e => e.preventDefault()}>
-              <Input
-                placeholder='Search politician'
-                value={filter.search}
-                onChange={handleFilterChange}
-                aria-label='Search politician'
-              />
-
-              <Select
-                value={filter.position}
-                onChange={e =>
-                  setFilter({ ...filter, position: e.target.value })
-                }
-                aria-label='Filter by position'
-              >
-                <option value=''>All positions</option>
-                {uniquePositions.map(position => (
-                  <option key={position} value={position}>
-                    {position}
-                  </option>
-                ))}
-              </Select>
-            </form>
+            <PoliticiansFilters
+              filter={filter}
+              positions={uniquePositions}
+              onFilterChange={setFilter}
+            />
 
             {filteredPoliticians.length === 0 ? (
               <p role='status'>No politicians found.</p>

@@ -5,12 +5,3 @@ main {
     margin-top: 1rem;
   }
 }
-
-.filter-form {
-  display: grid;
-  gap: 1rem;
-
-  @media (min-width: 548px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
