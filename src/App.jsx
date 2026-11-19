@@ -22,12 +22,18 @@ export const App = () => {
 
     const formattedSearch = filter.search.trim().toLowerCase();
 
-    return state.data.filter(
-      politician =>
-        (politician.name.toLowerCase().includes(formattedSearch) ||
-          politician.biography.toLowerCase().includes(formattedSearch)) &&
-        (filter.position === '' || politician.position === filter.position),
-    );
+    return state.data.filter(politician => {
+      const isInName = politician.name.toLowerCase().includes(formattedSearch);
+      const isInBio = politician.biography
+        .toLowerCase()
+        .includes(formattedSearch);
+      const allPoliticiansSelected = filter.position === '';
+      const matchesPosition = politician.position === filter.position;
+
+      return (
+        (isInName || isInBio) && (allPoliticiansSelected || matchesPosition)
+      );
+    });
   }, [state, filter.search, filter.position]);
 
   // Derive unique positions from the fetched politicians
