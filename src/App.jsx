@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PoliticiansList } from './components/PoliticiansList';
+import { Input } from './components/ui/Input';
 import { fetchJson } from './lib/api';
 import './App.css';
 
@@ -7,7 +8,20 @@ const API_URL = 'http://localhost:3333';
 const RESOURCE = 'politicians';
 
 export const App = () => {
+  const [search, setSearch] = useState('');
   const [state, setState] = useState({ step: 'idle' });
+
+  const filteredPoliticians = useMemo(() => {
+    if (state.step !== 'success') return [];
+
+    const formattedSearch = search.trim().toLowerCase();
+
+    return state.data.filter(
+      politician =>
+        politician.name.toLowerCase().includes(formattedSearch) ||
+        politician.biography.toLowerCase().includes(formattedSearch),
+    );
+  }, [state, search]);
 
   useEffect(() => {
     const getPoliticians = async () => {
@@ -34,12 +48,21 @@ export const App = () => {
         return <p role='status'>Loading...</p>;
 
       case 'success':
-        const { data: politicians } = state;
+        return (
+          <>
+            <Input
+              placeholder='Search politician'
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
 
-        if (!politicians || politicians.length === 0)
-          return <p role='status'>No politicians found.</p>;
-
-        return <PoliticiansList politicians={politicians} />;
+            {filteredPoliticians.length === 0 ? (
+              <p role='status'>No politicians found.</p>
+            ) : (
+              <PoliticiansList politicians={filteredPoliticians} />
+            )}
+          </>
+        );
 
       case 'error':
         return <p role='alert'>Error: {state.error}</p>;
